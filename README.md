@@ -17,9 +17,10 @@ but you have the choice of creating an icon and converting to base64 for
 use in your DIalog Window
 
 To make your icon turn into a base64 string
-base64 <path to image> > /tmp/myLogo.txt
+```base64 <path to image> > /tmp/myLogo.txt```
 Example
-base64 /tmp/D8Logo.png > /tmp/d8Logo.txt
+```base64 /tmp/D8Logo.png > /tmp/d8Logo.txt```
+
 this command will read your graphic file and output the converted string to 
 /tmp/d8Logo.txt you can then open that file and copy the entire string. Place 
 it as a hard coded value in the script or pass as a parameter from jamf.
