@@ -17,8 +17,11 @@ but you have the choice of creating an icon and converting to base64 for
 use in your DIalog Window
 
 To make your icon turn into a base64 string
+
 ```base64 <path to image> > /tmp/myLogo.txt```
+
 Example
+
 ```base64 /tmp/D8Logo.png > /tmp/d8Logo.txt```
 
 this command will read your graphic file and output the converted string to 
