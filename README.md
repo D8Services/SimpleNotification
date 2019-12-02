@@ -3,6 +3,7 @@
 V1.0 20191115 - Tomos Tyler
 	Initial creation, leverages Jamf helper as the PPPC preference is configured
 	by default
+
 V1.1 20191115 - Tomos Tyler, added support for optional custom logo
 
 Script Use
