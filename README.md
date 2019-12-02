@@ -1,13 +1,13 @@
 # SimpleNotification.sh
 
 V1.0 20191115 - Tomos Tyler
-	Initial creation, leverages Jamf helper as the PPPC preference is configured
+	Initial creation, leverages Jamf helper as the PPPC preference is pre configured
 	by default
 
 V1.1 20191115 - Tomos Tyler, added support for optional custom logo
 
 Script Use
-must be to a mac enrolled in a Jamf Server
+must be to a mac enrolled in a Jamf Server, it utilised the JamfHelper command, so no Jamf, no dialog.
 Use the hard coded value or pass parameters to the script through Jamf
 
 The Logo is optional!!
