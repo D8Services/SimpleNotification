@@ -91,16 +91,20 @@ fi
 jamfHelper="/Library/Application Support/JAMF/bin/jamfHelper.app/Contents/MacOS/jamfHelper"
 
 loggedInUser=$(/usr/bin/python -c 'from SystemConfiguration import SCDynamicStoreCopyConsoleUser; import sys; username = (SCDynamicStoreCopyConsoleUser(None, None, None) or [None])[0]; username = [username,""][username in [u"loginwindow", None, u""]]; sys.stdout.write(username + "\n");')
+currentUID=$(dscl . read /Users/$currentUser UniqueID | awk '{print $2}')
+#if [[ $currentUID == "0" ]];then
+#	exit 1
+#fi
 
 # Check if theLogo string is populated and display the appropriate dialog
 if [[ -z "${thelogo}" ]];then
-launchctl "asuser" "USER_ID" "$jamfHelper" -title "${theTitle}" -windowType utility -description "${theMessage}" -icon "/System/Library/CoreServices/ReportPanic.app/Contents/Resources/ProblemReporter.icns" -button2 "Cancel" -button1 "Open" -defaultButton 1 -countdown 20
+launchctl "asuser" "$currentUID" "$jamfHelper" -title "${theTitle}" -windowType utility -description "${theMessage}" -icon "/System/Library/CoreServices/ReportPanic.app/Contents/Resources/ProblemReporter.icns" -button2 "Cancel" -button1 "Open" -defaultButton 1 -countdown 20
 else
 cat << EOF > /tmp/theLogo.txt
 $thelogo
 EOF
 cat /tmp/theLogo.txt | base64 --decode > /tmp/theLogo.png
-launchctl "asuser" "USER_ID" "$jamfHelper" -title "${theTitle}" -windowType utility -description "${theMessage}" -icon "/private/tmp/theLogo.png" -button2 "Cancel" -button1 "Open" -defaultButton 1
+launchctl "asuser" "$currentUID" "$jamfHelper" -title "${theTitle}" -windowType utility -description "${theMessage}" -icon "/private/tmp/theLogo.png" -button2 "Cancel" -button1 "Open" -defaultButton 1
 fi
 
 # Open the URL if the user clicked OK
