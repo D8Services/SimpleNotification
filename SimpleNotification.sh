@@ -55,6 +55,8 @@
 # theURL="ftp://ftp.d8services.com"
 # Open a file
 # theURL="/Users/Shared/CodeofConduct.pdf"
+# Jamf Self Service
+# theURL="jamfselfservice://content?entity=policy&id=X&action=view"
 # 
 #Hard Coded Values
 # Main text displayed to the user
