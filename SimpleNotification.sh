@@ -21,6 +21,7 @@
 #
 # About this Script
 # SimpleNotification.sh
+# https://github.com/D8Services/SimpleNotification
 #
 # V1.0 20191115 - Tomos Tyler
 #	Initial creation, leverages Jamf helper as the PPPC preference is configured
