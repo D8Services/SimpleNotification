@@ -6,27 +6,14 @@ V1.0 20191115 - Tomos Tyler
 
 V1.1 20191115 - Tomos Tyler, added support for optional custom logo
 
+V1.1 20240118 - Tomos Tyler, Removed base64, just using the path now, just tested and saw that icons are not displayed unless they are ICNS files
+
 Script Use
 must be to a mac enrolled in a Jamf Server, it utilised the JamfHelper command, so no Jamf, no dialog.
 Use the hard coded value or pass parameters to the script through Jamf
 
 The Logo is optional!!
-
-The logo is a nice little feature, the system will default to a MacOS logo
-but you have the choice of creating an icon and converting to base64 for
-use in your DIalog Window
-
-To make your icon turn into a base64 string
-
-```base64 <path to image> > /tmp/myLogo.txt```
-
-Example
-
-```base64 /tmp/D8Logo.png > /tmp/d8Logo.txt```
-
-this command will read your graphic file and output the converted string to 
-/tmp/d8Logo.txt you can then open that file and copy the entire string. Place 
-it as a hard coded value in the script or pass as a parameter from jamf.
+Use the path to an ICNS file
 
 Open Command
 I am not re-writing the man page for the open command, but...
