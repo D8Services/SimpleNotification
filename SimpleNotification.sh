@@ -2,7 +2,7 @@
 
 
 ###############################################################
-#	Copyright (c) 2019, D8 Services Ltd.  All rights reserved.  
+#	Copyright (c) 2023, D8 Services Ltd.  All rights reserved.  
 #											
 #	
 #	THIS SOFTWARE IS PROVIDED BY D8 SERVICES LTD. "AS IS" AND ANY
@@ -27,6 +27,8 @@
 #	Initial creation, leverages Jamf helper as the PPPC preference is configured
 #	by default
 # V1.1 20191115 - Tomos Tyler, added support for custom logo
+# v1.3 20230118 - Tomos Tyler, removed the base64 image and tried using the path, Something is broken, 
+# the image must be an ICNS file tested on Jamf Help 2024.
 #
 # Script Use
 # must be to a mac enrolled in a Jamf Server
@@ -38,14 +40,8 @@
 # but you have the choice of creating an icon and converting to base64 for
 # use in your DIalog Window
 #
-# To make your icon turn into a base64 string
-# base64 <path to image> > /tmp/myLogo.txt
-# Example
-# base64 /tmp/D8Logo.png > /tmp/d8Logo.txt
-# this command will read your graphic file and output the converted string to 
-# /tmp/d8Logo.txt you can then open that file and copy the entire string. Place 
-# it as a hard coded value in the script or pass as a parameter from jamf.
-# 
+# Icon MUST BE AN ICNS FILE, not sure thought this would be a good idea
+#
 # Open Command
 # I am not re-writing the man page for the open command, but...
 # The URL string can be very useful if you want to notify your users to a Jamf Update, or 
@@ -67,7 +63,7 @@ theTitle=""
 # the URL for the user to open
 #theURL="https://www.d8services.com"
 theURL=""
-# the base64 of your logo (optional, can be left blank)
+# path to logo (optional, can be left blank Thanks Jamf MUST BE AN ICNS FILE)
 thelogo=""
 ######### Do not edit below this line ##########
 
@@ -99,18 +95,13 @@ currentUID=$(dscl . read /Users/$loggedInUser UniqueID | awk '{print $2}')
 #fi
 
 # Check if theLogo string is populated and display the appropriate dialog
-if [[ -z "${thelogo}" ]];then
-launchctl "asuser" "$currentUID" "$jamfHelper" -title "${theTitle}" -windowType utility -description "${theMessage}" -icon "/System/Library/CoreServices/ReportPanic.app/Contents/Resources/ProblemReporter.icns" -button2 "Cancel" -button1 "Open" -defaultButton 1 -countdown 20
+if [[ ! -e "${thelogo}" ]];then
+launchctl "asuser" "$currentUID" "$jamfHelper" -title "${theTitle}" -windowType utility -description "${theMessage}" -icon "/Library/Application Support/JAMF/Jamf.app/Contents/Resources/AppIcon.icns" -button2 "Cancel" -button1 "Open" -defaultButton 1 -countdown 20
 else
-cat << EOF > /tmp/theLogo.txt
-$thelogo
-EOF
-cat /tmp/theLogo.txt | base64 --decode > /tmp/theLogo.png
-launchctl "asuser" "$currentUID" "$jamfHelper" -title "${theTitle}" -windowType utility -description "${theMessage}" -icon "/private/tmp/theLogo.png" -button2 "Cancel" -button1 "Open" -defaultButton 1
+launchctl "asuser" "$currentUID" "$jamfHelper" -title "${theTitle}" -windowType utility -description "${theMessage}" -icon "${theLogo}" -button2 "Cancel" -button1 "Open" -defaultButton 1 -countdown 20
 fi
 
 # Open the URL if the user clicked OK
 if [[ $? == "0" ]];then
 sudo -u $loggedInUser -i open "${theURL}"
 fi
-
